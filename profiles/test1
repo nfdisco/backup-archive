@@ -1,0 +1,18 @@
+(foo
+ "/foo"
+ ("/home/foo" "/home/bar")
+ ()
+ tar-gz)
+
+(backup-1
+ "dest1"
+ ("path1" "path2")
+ ()
+ tar-gz)
+
+(backup-2
+ "dest2"
+ ("path3")
+ (:not (name ".aux"))
+ tar-gpg)
+ 

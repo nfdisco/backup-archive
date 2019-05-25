@@ -1,6 +1,7 @@
-(define-module (archive-backup cli)
-  #:use-module (archive-backup program)
-  #:use-module (archive-backup message)
+(define-module (backup-archive cli)
+  #:use-module (backup-archive program)
+  #:use-module (backup-archive message)
+  #:use-module (backup-archive profile)
   #:use-module (ice-9 getopt-long)
   #:export     (main))
 
@@ -31,7 +32,8 @@ Options:
           ((option-ref options 'version #f)
            (display-version))
           (else
-           #t))))
+           (format #t "~s\n"
+                   (read-profiles (car (option-ref options '() #f))))))))
 
 (define (main args)
   (parameterize ((program-name (basename (car args))))

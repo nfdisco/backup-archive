@@ -1,5 +1,5 @@
-(define-module (archive-backup message)
-  #:use-module (archive-backup program)
+(define-module (backup-archive message)
+  #:use-module (backup-archive program)
   #:export     (msg-info msg-warning msg-error))
 
 (define (message port suffix msg . args)
