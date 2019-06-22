@@ -1,19 +1,14 @@
-Guile Project Template
-======================
+backup-archive
+==============
 
-A template for Guile projects.
+Make incremental backups with find and tar.
 
-This project is intended to be used as a template for other Guile
-projects.
+This program is written in GNU Guile.
 
-Layout
+Status
 ------
 
-The project consists of
-
-- Guile modules, in the module/ directory
-- executable scripts, in the src/ directory
-- build infrastructure, which relies on the GNU Autotools
+This project is work in progress.
 
 Development
 -----------
@@ -42,12 +37,4 @@ Once the source tree is configured, run
     make && make install
 
 to compile and install the program.
-
-Acknowledgements
-----------------
-
-This project is based on Erik Edrosa's article "Setting up a GNU Guile
-project with Autotools".  See
-<https://erikedrosa.com/2017/10/29/guile-projects-with-autotools.html>
-for details.
 

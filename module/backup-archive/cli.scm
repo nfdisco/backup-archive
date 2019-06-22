@@ -9,7 +9,7 @@
   "Print help message."
   (format #t "\
 Usage: ~a [OPTIONS] [BACKUP-ID]
-Backup data using find and tar.
+Incremental backups with find and tar.
 
 Options:
      -h, --help     show this help and exit
