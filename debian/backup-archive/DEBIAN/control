@@ -1,0 +1,10 @@
+Package: backup-archive
+Version: 0.1-1
+Architecture: all
+Maintainer: nfdisco <nr9@posteo.de>
+Installed-Size: 127
+Depends: guile-2.0
+Section: misc
+Priority: optional
+Description: Incremental backups with find and tar
+ Make incremental backups with find and tar.

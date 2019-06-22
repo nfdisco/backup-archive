@@ -1,0 +1,12 @@
+Source: backup-archive
+Maintainer: nfdisco <nr9@posteo.de>
+Section: misc
+Priority: optional
+Build-Depends: debhelper (>= 10), guile-2.0-dev
+
+Package: backup-archive
+Architecture: all
+Depends: guile-2.0
+Description: Incremental backups with find and tar
+ Make incremental backups with find and tar.
+
