@@ -26,20 +26,10 @@
       (format #t "file count: ~s\n" (string-count (car find-status) #\null))
       (format #t "output file: ~a\n" (cdr archive))
       (if (ask-yes-no-question? "continue? ")
-          (let* ((files-from-filename (string-copy "/tmp/BA.XXXXXX"))
-                 (files-from-port (mkstemp! files-from-filename)))
-            (catch #t
-                   (lambda ()
-                     (display (car find-status) files-from-port)
-                     (archive-write (cdr archive)
-                                    files-from-filename
-                                    (archive-format-filters fmt))
-                     (close-port files-from-port)
-                     (delete-file files-from-filename)
-                     (format #t "done.\n"))
-                   (lambda (key . rest)
-                     (close-port files-from-port)
-                     (delete-file files-from-filename)
-                     (msg-error "~a" key))))
+          (begin
+            (archive-write (cdr archive)
+                           (car find-status)
+                           (archive-format-filters fmt))
+            (format #t "done.\n"))
           (format #t "aborting.\n"))))))
 

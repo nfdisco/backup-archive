@@ -65,18 +65,18 @@ archive format."
                 #f)
             (path-join dir (archive-filename id (1+ (cdr last)) fmt))))))
 
-(define (archive-write output-file files-from-file filters)
+(define (archive-write output-file file-names filters)
   "Write archive file."
   (with-output-to-file output-file
     (lambda ()
-      (apply shell-pipe
-             (cons (list "tar"
-                         "--no-recursion"
-                         "--null"
-                         "--files-from"
-                         files-from-file
-                         "--preserve-permissions"
-                         "--create"
-                         "--totals")
-                   filters)))))
+      ((apply shell-pipe
+              (cons '("tar"
+                      "--no-recursion"
+                      "--null"
+                      "--files-from" "-"
+                      "--preserve-permissions"
+                      "--create"
+                      "--totals")
+                    filters))
+       (display file-names)))))
 

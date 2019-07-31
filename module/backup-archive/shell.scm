@@ -14,16 +14,27 @@ its exit status"
   (let* ((pipe (apply open-pipe* OPEN_READ prog args)))
     (list (get-string-all pipe) (close-pipe pipe))))
 
-(define (shell-pipe command . rest)
-  "Run shell commands in a pipe.  Return the exit status of the last
-command."
-  ((fold (lambda (cmd thunk)
-          (lambda ()
-            (let ((pipe (apply open-pipe* OPEN_WRITE cmd)))
-              (with-output-to-port pipe thunk)
-              (close-pipe pipe))))
-        (lambda () (apply shell-command command))
-        rest)))
+(define (make-pipe lst)
+  "Return a procedure of one argument which is either a procedure that
+writes to the standard output port or #f."
+  (lambda (thunk)
+    (if thunk
+        (let ((pipe (apply open-pipe* OPEN_WRITE lst)))
+          (with-output-to-port pipe thunk)
+          (close-pipe pipe))
+        (apply shell-command lst))))
 
+(define (cons-pipe head tail)
+  "Combine a series of pipes."
+  (fold (lambda (elt prev)
+          (lambda (thunk)
+            (elt (lambda () (prev thunk)))))
+        head
+        tail))
+
+(define (shell-pipe command . rest)
+  "Return a pipe."
+  (cons-pipe (make-pipe command)
+             (map make-pipe rest)))
 
 
