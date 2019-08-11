@@ -8,6 +8,5 @@ SOURCES = backup-archive/program.scm \
           backup-archive/config.scm \
           backup-archive/find.scm \
 	  backup-archive/archive.scm \
-          backup-archive/cli.scm \
-          backup-archive/backup.scm
+          backup-archive/cli.scm
 

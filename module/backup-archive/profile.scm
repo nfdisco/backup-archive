@@ -2,19 +2,19 @@
   #:use-module (srfi srfi-9)
   #:export     (make-profile
                 profile?
-                profile-id
-                profile-dest
-                profile-orig
-                profile-pred
-                profile-fmt))
+                archive-name
+                archive-dir
+                backup-dirs
+                backup-predicate
+                archive-format))
 
 
-(define-record-type <profile>
-  (make-profile id dest orig pred fmt)
+(define-record-type profile
+  (make-profile name dir dirs predicate format)
   profile?
-  (id   profile-id)
-  (dest profile-dest)
-  (orig profile-orig)
-  (pred profile-pred)
-  (fmt  profile-fmt))
+  (name      archive-name)
+  (dir       archive-dir)
+  (dirs      backup-dirs)
+  (predicate backup-predicate)
+  (format    archive-format))
 

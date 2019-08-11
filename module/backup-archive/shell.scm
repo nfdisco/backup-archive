@@ -2,7 +2,11 @@
   #:use-module (ice-9 popen)
   #:use-module (rnrs io ports)
   #:use-module (srfi srfi-1)
-  #:export     (shell-command shell-command* shell-pipe))
+  #:export     (shell-command
+                shell-command*
+                shell-pipe
+                command-status
+                command-output))
 
 (define (shell-command prog . args)
   "Run a shell command and return its exit status."
@@ -13,6 +17,10 @@
 its exit status"
   (let* ((pipe (apply open-pipe* OPEN_READ prog args)))
     (list (get-string-all pipe) (close-pipe pipe))))
+
+(define command-status cadr)
+
+(define command-output car)
 
 (define (make-pipe lst)
   "Return a procedure of one argument which is either a procedure that
@@ -36,5 +44,3 @@ writes to the standard output port or #f."
   "Return a pipe."
   (cons-pipe (make-pipe command)
              (map make-pipe rest)))
-
-

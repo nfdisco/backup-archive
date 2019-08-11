@@ -1,7 +1,7 @@
 (define-module (backup-archive find)
   #:use-module (backup-archive shell)
   #:use-module (backup-archive common)
-  #:export     (find-files))
+  #:export     (backup-find-files))
 
 
 (define find-invalid-primary-operands
@@ -53,7 +53,13 @@
                                (and prev (list 'newer prev))
                                'print0))))
 
-(define (find-files path pred prev)
-  "Return a string of NULL-separated filenames and the exit status of find."
-  (apply shell-command* "find" (append path (find-test-args pred prev))))
-
+(define (backup-find-files backup-dirs file-predicate archive-last)
+  (let ((value (apply shell-command*
+                      "find"
+                      (append backup-dirs
+                              (find-test-args file-predicate archive-last)))))
+    (cond ((not (zero? (command-status value)))
+           (error "find exited with non-zero status: "
+                  (command-status value)))
+          (else
+           (command-output value)))))

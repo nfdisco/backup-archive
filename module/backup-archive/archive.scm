@@ -6,6 +6,8 @@
                 archive-format-suffix
                 archive-format-filters
                 archive-find
+                archive-last
+                archive-current
                 archive-write))
 
 (define archive-format-alist
@@ -35,18 +37,18 @@ archive format."
         #f
         (cadr value))))
 
-(define (archive-filename-pattern id)
-  "Return regular expression that matches ID archive filenames."
-  (make-regexp (string-append "^" (regexp-quote id) "-([0-9]+)([.].+)?$")))
+(define (archive-filename-pattern name)
+  "Return regular expression that matches NAME archive filenames."
+  (make-regexp (string-append "^" (regexp-quote name) "-([0-9]+)([.].+)?$")))
 
-(define (archive-filename id n fmt)
+(define (archive-filename name n fmt)
   "Return archive filename."
-  (string-append id "-" (number->string n) (archive-format-suffix fmt)))
+  (string-append name "-" (number->string n) (archive-format-suffix fmt)))
 
-(define (archive-find id dir fmt)
-  "Return the pathnames of previous and current archives."
+(define (archive-find name dir fmt)
+  "Return the pathnames of last and current archive."
   (let ((stream (opendir dir))
-        (pattern (archive-filename-pattern id)))
+        (pattern (archive-filename-pattern name)))
     (define (iter last)
       (let ((filename (readdir stream)))
         (if (eof-object? filename)
@@ -63,9 +65,13 @@ archive format."
       (cons (if (car last)
                 (path-join dir (car last))
                 #f)
-            (path-join dir (archive-filename id (1+ (cdr last)) fmt))))))
+            (path-join dir (archive-filename name (1+ (cdr last)) fmt))))))
 
-(define (archive-write output-file file-names filters)
+(define archive-last car)
+
+(define archive-current cdr)
+
+(define (archive-write output-file backup-files filters)
   "Write archive file."
   (with-output-to-file output-file
     (lambda ()
@@ -78,5 +84,5 @@ archive format."
                       "--create"
                       "--totals")
                     filters))
-       (display file-names)))))
+       (lambda () (display backup-files))))))
 
