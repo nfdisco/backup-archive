@@ -1,3 +1,0 @@
-#!/bin/sh
-exec guile --no-auto-compile -e '(@ (backup-archive cli) main)' -s "$0" "$@"
-!#

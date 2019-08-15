@@ -1,5 +1,7 @@
-backup-archive (0.1-1) UNRELEASED; urgency=medium
+backup-archive (0.3-1) UNRELEASED; urgency=medium
 
   * Initial release.
+  * New upstream version.
+  * New upstream version.
 
- -- nfdisco <nr9@posteo.de>  Sat, 22 Jun 2019 11:16:10 +0200
+ -- nfdisco <nr9@posteo.de>  Thu, 15 Aug 2019 16:41:02 +0200
