@@ -2,7 +2,7 @@
   #:use-module (srfi srfi-9)
   #:export     (make-profile
                 profile?
-                archive-name
+                archive-label
                 archive-dir
                 backup-dirs
                 backup-predicate
@@ -10,9 +10,9 @@
 
 
 (define-record-type profile
-  (make-profile name dir dirs predicate format)
+  (make-profile label dir dirs predicate format)
   profile?
-  (name      archive-name)
+  (label     archive-label)
   (dir       archive-dir)
   (dirs      backup-dirs)
   (predicate backup-predicate)

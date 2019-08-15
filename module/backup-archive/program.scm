@@ -5,7 +5,7 @@
 
 (define program-name (make-parameter "backup-archive"))
 
-(define backup-archive-version "0.3")
+(define backup-archive-version "0.4")
 
 (define config-file
   (make-parameter

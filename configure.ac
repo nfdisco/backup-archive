@@ -1,4 +1,4 @@
-AC_INIT([backup-archive], [0.3])
+AC_INIT([backup-archive], [0.4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])

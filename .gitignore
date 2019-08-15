@@ -1,11 +1,11 @@
-**/Makefile.in
-**/Makefile
-build-aux
-config.*
-configure
-aclocal.m4
-autom4te.cache/
-pre-inst-env
+Makefile.in
+Makefile
+/build-aux
+/config.*
+/configure
+/aclocal.m4
+/autom4te.cache/
+/pre-inst-env
 
-**/*.go
+*.go
 

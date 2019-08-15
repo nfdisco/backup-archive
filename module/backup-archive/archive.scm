@@ -37,17 +37,17 @@ archive format."
 
 (define (archive-filename-pattern prefix)
   "Return filename pattern."
-  (string-append "^" (regexp-quote prefix) "-([0-9]+)-([a-z]+)([.].+)?$"))
+  (string-append "^" (regexp-quote prefix) "-([0-9]+)([.].+)?[.]([0-9]+)$"))
 
 (define (archive-filename-volume match)
-  "Return volume component."
+  "Return volume component as integer."
   (and match
        (string->number (match:substring match 1))))
 
 (define (archive-filename-part match)
   "Return part component."
   (and match
-       (match:substring match 2)))
+       (match:substring match 3)))
 
 (define (archive-filename match)
   "Return whole filename."
@@ -60,22 +60,22 @@ archive format."
     (lambda (filename)
       (regexp-exec pattern filename))))
 
-(define (archive-filename-prefix name volume)
+(define (archive-filename-prefix label volume)
   "Return archive filename prefix."
-  (format #f "~a-~3,'0d-" name volume))
+  (format #f "~a-~3,'0d" label volume))
 
-(define (archive-prefix-current name last)
+(define (archive-prefix-current label last)
   "Return filename prefix for current archive."
   (if last
-      (let ((match ((archive-filename-parser name) last)))
-        (archive-filename-prefix name
+      (let ((match ((archive-filename-parser label) last)))
+        (archive-filename-prefix label
                                  (1+ (archive-filename-volume match))))
-      (archive-filename-prefix name 0)))
+      (archive-filename-prefix label 0)))
 
-(define (archive-find-most-recent name dir)
+(define (archive-find-most-recent label dir)
   "Return filename of most recent archive."
   (let ((stream (opendir dir))
-        (f (archive-filename-parser name)))
+        (f (archive-filename-parser label)))
     (define (iter match)
       (let ((filename (readdir stream)))
         (cond ((eof-object? filename)
@@ -108,11 +108,11 @@ archive format."
              "--totals")
             ,@(archive-format-filters archive-format)
             ("split"
-             "--additional-suffix"
-             ,(archive-format-suffix archive-format)
              "-b"
              "1G"
              "-d"
              "-"
-             ,output-prefix)))
+             ,(string-append output-prefix
+                             (archive-format-suffix archive-format)
+                             "."))))
    (lambda () (display backup-files))))

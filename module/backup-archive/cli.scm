@@ -52,10 +52,10 @@ Options:
     (when config
           (config-file config))
     (let* ((profile (config-get-profile (string->symbol (car non-opt-args))))
-           (name    (archive-name profile))
+           (label   (archive-label profile))
            (dir     (archive-dir profile)))
       (chdir dir)
-      (let* ((archive-last (archive-find-most-recent name dir))
+      (let* ((archive-last (archive-find-most-recent label dir))
              (file-list    (backup-find-files (backup-dirs profile)
                                               (backup-predicate profile)
                                               archive-last))
@@ -69,7 +69,7 @@ Options:
         (format #t "file count: ~s\n" file-count)
         (when (and (not (zero? file-count))
                    (ask-yes-no-question? "continue? "))
-              (archive-write (archive-prefix-current name archive-last)
+              (archive-write (archive-prefix-current label archive-last)
                              file-list
                              (archive-format profile)))))))
 
